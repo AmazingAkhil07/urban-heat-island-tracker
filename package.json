@@ -4,7 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "frontend": "vite",
+    "backend": "python backend/manage.py runserver",
+    "dev": "concurrently \"npm run frontend\" \"npm run backend\"",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
@@ -12,6 +14,7 @@
   "dependencies": {
     "@deck.gl/aggregation-layers": "^9.3.0",
     "@deck.gl/core": "^9.3.0",
+    "@deck.gl/geo-layers": "^9.3.1",
     "@deck.gl/layers": "^9.3.0",
     "@deck.gl/react": "^9.3.0",
     "framer-motion": "^12.38.0",
@@ -20,13 +23,15 @@
     "maplibre-gl": "^5.23.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "react-map-gl": "^8.1.1"
+    "react-map-gl": "^8.1.1",
+    "recharts": "^3.8.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
+    "concurrently": "^9.2.1",
     "eslint": "^9.39.4",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.5.2",

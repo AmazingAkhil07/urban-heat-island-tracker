@@ -1,0 +1,158 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  /* NASA / Space Black Theme */
+  --bg-primary: #02040a;
+  --bg-secondary: #060913;
+  --bg-panel: rgba(6, 10, 20, 0.75);
+  --bg-card: rgba(12, 18, 30, 0.85);
+  --bg-hover: rgba(30, 45, 80, 0.6);
+
+  /* Deep Space Borders */
+  --border: rgba(60, 100, 255, 0.15);
+  --border-warm: rgba(255, 80, 0, 0.3);
+  --border-bright: rgba(100, 150, 255, 0.4);
+
+  /* Typography Colors */
+  --text-primary: #f0f4f8;
+  --text-secondary: #9ba5b5;
+  --text-muted: #5c677d;
+
+  /* Risk Level Accents */
+  --c-critical: #ff1744;
+  --c-extreme: #ff6d00;
+  --c-high: #ffd600;
+  --c-moderate: #00e5aa;
+  --c-low: #40c4ff;
+
+  --accent-blue: #40c4ff;
+  
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  
+  --font-sans: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Glassmorphism Utilities */
+.glass-panel {
+  background: var(--bg-panel);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6);
+}
+
+.glass-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+/* Badges */
+.badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-family: var(--font-sans);
+}
+
+.badge-LOW { background: rgba(64,196,255,0.15); color: var(--c-low); border: 1px solid rgba(64,196,255,0.3); }
+.badge-MODERATE { background: rgba(0,229,170,0.15); color: var(--c-moderate); border: 1px solid rgba(0,229,170,0.3); }
+.badge-HIGH { background: rgba(255,214,0,0.15); color: var(--c-high); border: 1px solid rgba(255,214,0,0.3); }
+.badge-EXTREME { background: rgba(255,109,0,0.15); color: var(--c-extreme); border: 1px solid rgba(255,109,0,0.3); }
+.badge-CRITICAL { background: rgba(255,23,68,0.15); color: var(--c-critical); border: 1px solid rgba(255,23,68,0.4); box-shadow: 0 0 10px rgba(255,23,68,0.3); }
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.15);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+/* Animations */
+@keyframes pulse-critical {
+  0% { transform: scale(1); opacity: 1; box-shadow: 0 0 10px rgba(255,23,68,0.6); }
+  50% { transform: scale(1.15); opacity: 0.8; box-shadow: 0 0 25px rgba(255,23,68,0.9); }
+  100% { transform: scale(1); opacity: 1; box-shadow: 0 0 10px rgba(255,23,68,0.6); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite linear;
+  border-radius: 4px;
+}
+
+/* Utility */
+.ellipsis { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* Custom Range Slider */
+input[type=range] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 24px;
+  width: 12px;
+  border-radius: 6px;
+  background: #ffffff;
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(255,255,255,0.5);
+  border: 1px solid rgba(0,0,0,0.2);
+}
+input[type=range]:focus {
+  outline: none;
+}
