@@ -9,8 +9,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / '.env')
 
 SECRET_KEY = 'uhi-predictor-dev-secret-key-change-in-production'
-DEBUG = True
-ALLOWED_HOSTS = ['*']
+DEBUG = os.getenv('DEBUG', 'True') == 'True'
+ALLOWED_HOSTS = ['.vercel.app', 'localhost', '127.0.0.1', '*']
 
 INSTALLED_APPS = [
     'django.contrib.auth',
@@ -40,12 +40,15 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# ─── CORS: allow React dev server ───────────────────────────────
+# ─── CORS: allow React dev server and Vercel domains ──────────
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
     'http://127.0.0.1:5173',
 ]
-CORS_ALLOW_ALL_ORIGINS = DEBUG  # allow all in dev
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https:\/\/.*\.vercel\.app$",
+]
+CORS_ALLOW_ALL_ORIGINS = DEBUG  # allow all in dev mode
 
 # ─── DRF ────────────────────────────────────────────────────────
 REST_FRAMEWORK = {
