@@ -34,6 +34,9 @@ export default function App() {
   const [showDecadalProjection, setShowDecadalProjection] = useState(false);
   const [decadalData, setDecadalData] = useState(null);
 
+  // Mobile navigation state
+  const [activeTab, setActiveTab] = useState('MAP'); // 'MAP', 'MONITOR', 'ANALYTICS'
+
   const fetchCityData = async (cityName) => {
     setLoading(true);
     setError(null);
@@ -155,14 +158,66 @@ export default function App() {
   }, [activeForecast, currentHour]);
 
   return (
-    <div style={{
-      display: 'grid',
-      gridTemplateRows: '60px 1fr 140px',
-      gridTemplateColumns: 'minmax(320px, 350px) 1fr minmax(320px, 400px)',
-      height: '100vh',
-      width: '100vw',
-      position: 'relative'
-    }}>
+    <div 
+      className="main-layout"
+      style={{
+        display: 'grid',
+        gridTemplateRows: '60px 1fr 140px',
+        gridTemplateColumns: 'var(--left-col, 350px) 1fr var(--right-col, 400px)',
+        height: '100dvh',
+        width: '100vw',
+        position: 'relative',
+        '--left-col': 'minmax(320px, 350px)',
+        '--right-col': 'minmax(320px, 400px)'
+      }}
+    >
+      <style>{`
+        @media (max-width: 850px) {
+          .main-layout {
+            grid-template-columns: 1fr !important;
+            grid-template-rows: 60px 1fr !important;
+          }
+          .sidebar-left {
+            position: fixed !important;
+            top: 60px;
+            left: 0;
+            right: 0;
+            bottom: 60px;
+            z-index: 100 !important;
+            transform: ${activeTab === 'MONITOR' ? 'translateX(0)' : 'translateX(-100%)'};
+            opacity: ${activeTab === 'MONITOR' ? 1 : 0};
+            pointer-events: ${activeTab === 'MONITOR' ? 'all' : 'none'};
+          }
+          .sidebar-right {
+            position: fixed !important;
+            top: 60px;
+            left: 0;
+            right: 0;
+            bottom: 60px;
+            z-index: 100 !important;
+            transform: ${activeTab === 'ANALYTICS' ? 'translateX(0)' : 'translateX(100%)'};
+            opacity: ${activeTab === 'ANALYTICS' ? 1 : 0};
+            pointer-events: ${activeTab === 'ANALYTICS' ? 'all' : 'none'};
+          }
+          .bottom-dock {
+             position: fixed !important;
+             bottom: 70px;
+             left: 0;
+             right: 0;
+             z-index: 90 !important;
+             margin: 0 !important;
+             border-radius: 0 !important;
+             display: ${activeTab === 'MAP' ? 'block' : 'none'} !important;
+             height: auto !important;
+          }
+          .center-hud {
+             top: 80px !important;
+             transform: scale(0.85);
+             display: ${activeTab === 'MAP' ? 'flex' : 'none'} !important;
+          }
+        }
+      `}</style>
+
       {/* Background Map layer spanning entire screen under panels */}
       <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0 }}>
         <MapView 
@@ -179,12 +234,12 @@ export default function App() {
       </div>
 
       {/* Header Overlay */}
-      <div style={{ gridColumn: '1 / -1', zIndex: 10 }}>
+      <div style={{ gridColumn: '1 / -1', zIndex: 110 }}>
         <SearchBar onSearch={fetchCityData} loading={loading} error={error} cityData={cityData} />
       </div>
 
       {/* Left Sidebar - Monitoring & Predict */}
-      <div className="glass-panel" style={{ 
+      <div className="glass-panel sidebar-left" style={{ 
         gridRow: '2 / 3', 
         gridColumn: '1 / 2', 
         zIndex: 10,
@@ -205,14 +260,15 @@ export default function App() {
       </div>
 
       {/* Center Top Floating HUD */}
-      <div style={{ 
+      <div className="center-hud" style={{ 
         gridRow: '2 / 3', 
         gridColumn: '2 / 3', 
         zIndex: 10,
         pointerEvents: 'none',
         display: 'flex',
         justifyContent: 'center',
-        paddingTop: 24
+        paddingTop: 24,
+        position: 'relative'
       }}>
         <ForecastCard 
           forecast={activeForecast} 
@@ -225,7 +281,7 @@ export default function App() {
       </div>
 
       {/* Right Sidebar - Analytics & Social */}
-      <div className="glass-panel" style={{ 
+      <div className="glass-panel sidebar-right" style={{ 
         gridRow: '2 / 3', 
         gridColumn: '3 / 4', 
         zIndex: 10,
@@ -253,7 +309,7 @@ export default function App() {
       </div>
 
       {/* Bottom Dock - Timeline */}
-      <div className="glass-panel" style={{ 
+      <div className="glass-panel bottom-dock" style={{ 
         gridRow: '3 / 4', 
         gridColumn: '1 / -1', 
         zIndex: 15,
@@ -268,6 +324,31 @@ export default function App() {
           onPlayToggle={() => setIsPlaying(p => !p)}
           timelineLength={timelineLength}
         />
+      </div>
+
+      {/* Mobile Navigation Bar */}
+      <div className="mobile-nav mobile-only">
+        <button 
+          className={`nav-item ${activeTab === 'MONITOR' ? 'active' : ''}`}
+          onClick={() => setActiveTab(activeTab === 'MONITOR' ? 'MAP' : 'MONITOR')}
+        >
+          <div className="nav-icon">📊</div>
+          <span>MONITOR</span>
+        </button>
+        <button 
+          className={`nav-item ${activeTab === 'MAP' ? 'active' : ''}`}
+          onClick={() => setActiveTab('MAP')}
+        >
+          <div className="nav-icon">🌍</div>
+          <span>MAP</span>
+        </button>
+        <button 
+          className={`nav-item ${activeTab === 'ANALYTICS' ? 'active' : ''}`}
+          onClick={() => setActiveTab(activeTab === 'ANALYTICS' ? 'MAP' : 'ANALYTICS')}
+        >
+          <div className="nav-icon">📈</div>
+          <span>FORECAST</span>
+        </button>
       </div>
 
       {/* Decadal Projection Popup */}

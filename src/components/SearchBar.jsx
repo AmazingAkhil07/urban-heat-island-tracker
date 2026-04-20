@@ -14,7 +14,7 @@ export default function SearchBar({ onSearch, loading, error, cityData }) {
   return (
     <header style={{
       display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-      padding: '0 32px',
+      padding: '0 12px',
       height: 60,
       background: 'rgba(2, 4, 10, 0.85)',
       borderBottom: '1px solid var(--border)',
@@ -22,7 +22,7 @@ export default function SearchBar({ onSearch, loading, error, cityData }) {
       boxShadow: '0 4px 24px rgba(0,0,0,0.4)',
     }}>
       {/* Logo Area */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
         <div style={{ 
             fontSize: 24, background: 'linear-gradient(135deg, #ff1744, #ff6d00)', 
             WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
@@ -30,7 +30,7 @@ export default function SearchBar({ onSearch, loading, error, cityData }) {
         }}>
            🛰️
         </div>
-        <div>
+        <div className="desktop-only">
           <div style={{ fontSize: 16, fontWeight: 900, letterSpacing: '0.05em' }}>
             <span style={{ color: '#fff' }}>ORBITAL</span>
             <span style={{ color: '#ff6d00' }}>THERMAL</span>
@@ -42,18 +42,18 @@ export default function SearchBar({ onSearch, loading, error, cityData }) {
       </div>
 
       {/* Main Search Input */}
-      <form onSubmit={handleSubmit} style={{ display: 'flex', alignItems: 'center', gap: 12, flex: 1, maxWidth: 480, margin: '0 32px' }}>
+      <form onSubmit={handleSubmit} style={{ display: 'flex', alignItems: 'center', gap: 8, flex: 1, maxWidth: 480, margin: '0 8px' }}>
         <div style={{ position: 'relative', width: '100%' }}>
           <input 
             type="text" 
-            placeholder="Initialize scan for global city (e.g. Lagos, Tokyo, Phoenix)..."
+            placeholder="Search city..."
             value={input}
             onChange={e => setInput(e.target.value)}
             disabled={loading}
             style={{
               width: '100%',
               height: 38,
-              padding: '0 16px 0 40px',
+              padding: '0 12px 0 32px',
               borderRadius: 6,
               background: 'rgba(255,255,255,0.03)',
               border: '1px solid rgba(100,140,255,0.2)',
@@ -75,7 +75,7 @@ export default function SearchBar({ onSearch, loading, error, cityData }) {
                e.target.style.boxShadow = 'inset 0 2px 4px rgba(0,0,0,0.5)';
             }}
           />
-          <span style={{ position: 'absolute', left: 14, top: 11, fontSize: 13, color: 'var(--accent-blue)' }}>⌕</span>
+          <span style={{ position: 'absolute', left: 10, top: 11, fontSize: 13, color: 'var(--accent-blue)' }}>⌕</span>
         </div>
         
         <button 
@@ -83,12 +83,12 @@ export default function SearchBar({ onSearch, loading, error, cityData }) {
           disabled={loading || !input.trim()}
           style={{
             height: 38,
-            padding: '0 24px',
+            padding: '0 16px',
             borderRadius: 6,
             background: loading ? '#222' : 'var(--accent-blue)',
             color: loading ? '#888' : '#000',
             border: 'none',
-            fontSize: 13,
+            fontSize: 11,
             fontWeight: 800,
             cursor: loading ? 'not-allowed' : 'pointer',
             transition: 'all 0.2s',
@@ -96,15 +96,15 @@ export default function SearchBar({ onSearch, loading, error, cityData }) {
             boxShadow: loading ? 'none' : '0 0 12px rgba(64,196,255,0.4)',
           }}
         >
-          {loading ? 'SCANNING' : 'EXECUTE'}
+          {loading ? '...' : 'SCAN'}
         </button>
       </form>
       
-      {/* Search Error Below the field temporarily */}
-      {error && <div style={{ position: 'absolute', top: 60, left: '50%', transform: 'translateX(-50%)', background: '#ff1744', color: '#fff', padding: '4px 12px', fontSize: 11, fontWeight: 700, borderRadius: '0 0 6px 6px' }}>{error}</div>}
+      {/* Search Error below */}
+      {error && <div style={{ position: 'absolute', top: 60, left: '50%', transform: 'translateX(-50%)', background: '#ff1744', color: '#fff', padding: '4px 12px', fontSize: 11, fontWeight: 700, borderRadius: '0 0 6px 6px', zIndex: 120 }}>{error}</div>}
 
-      {/* Quick Access Area */}
-      <div style={{ width: 280, textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'center' }}>
+      {/* Quick Access Area - Desktop only */}
+      <div className="desktop-only" style={{ width: 280, textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'center' }}>
         {cityData ? (
           <>
             <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>

@@ -14,33 +14,38 @@ export default function DecadalPopup({ data, onClose }) {
       animation: 'fade-in 0.5s ease-out'
     }}>
       <div className="glass-panel" style={{
-        width: 540, padding: 48, borderRadius: 'var(--radius-lg)',
+        width: '95%',
+        maxWidth: 540,
+        padding: '32px 24px',
+        borderRadius: 'var(--radius-lg)',
         border: '1px solid var(--border-bright)',
         boxShadow: '0 0 60px rgba(64, 196, 255, 0.15)',
         position: 'relative',
-        background: 'linear-gradient(180deg, rgba(6, 10, 20, 0.9) 0%, rgba(12, 18, 30, 0.95) 100%)'
+        background: 'linear-gradient(180deg, rgba(6, 10, 20, 0.9) 0%, rgba(12, 18, 30, 0.95) 100%)',
+        maxHeight: '90vh',
+        overflowY: 'auto'
       }}>
         {/* Decorative Grid Line */}
-        <div style={{ position: 'absolute', top: 0, left: 48, width: 2, height: 16, background: 'var(--accent-blue)' }} />
+        <div style={{ position: 'absolute', top: 0, left: 24, width: 2, height: 16, background: 'var(--accent-blue)' }} />
         
         <button onClick={onClose} style={{
-          position: 'absolute', top: 24, right: 32, background: 'none', border: 'none',
-          color: 'var(--text-muted)', fontSize: 28, cursor: 'pointer', transition: 'color 0.2s',
+          position: 'absolute', top: 16, right: 16, background: 'none', border: 'none',
+          color: 'var(--text-muted)', fontSize: 24, cursor: 'pointer', transition: 'color 0.2s',
         }} onMouseOver={e => e.currentTarget.style.color = '#fff'} onMouseOut={e => e.currentTarget.style.color = 'var(--text-muted)'}>×</button>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
            <div style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--accent-blue)', boxShadow: '0 0 10px var(--accent-blue)' }} />
-           <div style={{ fontSize: 11, color: 'var(--accent-blue)', letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: 800 }}>
+           <div style={{ fontSize: 10, color: 'var(--accent-blue)', letterSpacing: '0.2em', textTransform: 'uppercase', fontWeight: 800 }}>
              Transmission Complete
            </div>
         </div>
         
-        <h2 style={{ margin: 0, fontSize: 32, fontWeight: 900, color: '#fff', letterSpacing: '-0.02em', marginBottom: 24 }}>
+        <h2 style={{ margin: 0, fontSize: 24, fontWeight: 900, color: '#fff', letterSpacing: '-0.02em', marginBottom: 16 }}>
           15-Day Peak Projection
         </h2>
 
-        <p style={{ color: 'var(--text-secondary)', fontSize: 15, lineHeight: 1.6, marginBottom: 40 }}>
-          The statistical prediction engine has successfully evaluated the atmospheric corridor. Based on Holt-Winters extrapolation and historical analogs, the heat index is projected to reach acute levels over the upcoming two-week timeframe.
+        <p style={{ color: 'var(--text-secondary)', fontSize: 13, lineHeight: 1.6, marginBottom: 32 }}>
+          The statistical prediction engine has evaluated the atmospheric corridor. Heat index is projected to reach acute levels over the upcoming timeframe.
         </p>
 
         <div style={{ display: 'flex', gap: 24, marginBottom: 40, alignItems: 'center' }}>

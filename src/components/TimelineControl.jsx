@@ -36,10 +36,27 @@ export default function TimelineControl({ forecastData, currentHour, onHourChang
   if (!currentSnapshot) return null;
 
   return (
-    <div style={{ padding: '16px 24px', display: 'flex', gap: 32, alignItems: 'center' }}>
+    <div className="timeline-container" style={{ padding: '16px 24px', display: 'flex', gap: 32, alignItems: 'center' }}>
+      <style>{`
+        @media (max-width: 850px) {
+          .timeline-container {
+             gap: 16px !important;
+             padding: 12px 16px !important;
+          }
+          .timeline-meta {
+             min-width: unset !important;
+          }
+          .timeline-meta h2 {
+             font-size: 18px !important;
+          }
+          .timeline-chart-container {
+             display: none !important;
+          }
+        }
+      `}</style>
       
       {/* Play Controls & Time */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 20, minWidth: 200 }}>
+      <div className="timeline-meta" style={{ display: 'flex', alignItems: 'center', gap: 16, minWidth: 200 }}>
         <button 
           onClick={onPlayToggle}
           style={{
@@ -69,7 +86,7 @@ export default function TimelineControl({ forecastData, currentHour, onHourChang
       </div>
 
       {/* SVG Timeline Chart + Input Slider */}
-      <div style={{ position: 'relative', flex: 1, height: 60, display: 'flex', alignItems: 'center' }}>
+      <div className="timeline-chart-container" style={{ position: 'relative', flex: 1, height: 60, display: 'flex', alignItems: 'center' }}>
         
         {/* Background line chart */}
         <svg width="100%" height="80" preserveAspectRatio="none" style={{ position: 'absolute', top: -10, left: 0, opacity: 0.8 }}>

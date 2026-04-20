@@ -40,60 +40,74 @@ export default function ForecastCard({ forecast, currentHour, metrics }) {
   };
 
   return (
-    <div className="animate-fade-in" style={{
+    <div className="animate-fade-in forecast-container" style={{
       display: 'flex',
       gap: 16,
       alignItems: 'center',
     }}>
+      <style>{`
+        @media (max-width: 850px) {
+          .forecast-container {
+             flex-direction: column !important;
+             gap: 8px !important;
+             align-items: flex-start !important;
+             padding-left: 20px;
+          }
+          .forecast-pill-secondary {
+             display: none !important;
+          }
+        }
+      `}</style>
+
        {/* 1. Primary Stat Pill */}
        <div style={pillStyle}>
           <div style={{
-             width: 36, height: 36, borderRadius: '50%',
+             width: 32, height: 32, borderRadius: '50%',
              background: currentData.color,
              display: 'flex', alignItems: 'center', justifyContent: 'center',
              boxShadow: `0 0 16px ${currentData.color}88`,
              animation: currentData.level === 'CRITICAL' ? 'pulse-critical 1.5s infinite' : 'none',
-             fontSize: 16
+             fontSize: 14
           }}>
              {currentData.level === 'CRITICAL' ? '⚠️' : '🌡️'}
           </div>
           <div>
-             <div style={{ fontSize: 10, color: 'var(--text-secondary)', letterSpacing: '0.05em', textTransform: 'uppercase' }}>Forecast Heat Index</div>
-             <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
-                 <div style={{ fontSize: 24, fontWeight: 900, fontFamily: 'var(--font-mono)', color: currentData.color, letterSpacing: '-0.02em', lineHeight: 1 }}>
+             <div style={{ fontSize: 9, color: 'var(--text-secondary)', letterSpacing: '0.05em', textTransform: 'uppercase' }}>Heat Index</div>
+             <div style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
+                 <div style={{ fontSize: 20, fontWeight: 900, fontFamily: 'var(--font-mono)', color: currentData.color, letterSpacing: '-0.02em', lineHeight: 1 }}>
                     {(currentData.predicted_hi || currentData.heat_index).toFixed(1)}°C
                  </div>
-                 <div style={{ fontSize: 13, color: trendColor, fontWeight: 700 }}>{trendIcon} {trend}</div>
+                 <div style={{ fontSize: 11, color: trendColor, fontWeight: 700 }}>{trendIcon} {trend}</div>
              </div>
           </div>
        </div>
 
        {/* 2. Model Confidence Pill */}
        {metrics.hasPredictions && currentData.confidence && (
-         <div style={pillStyle}>
+         <div style={pillStyle} className="forecast-pill-secondary">
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-               <div style={{ fontSize: 10, color: 'var(--text-secondary)', letterSpacing: '0.05em', textTransform: 'uppercase' }}>Model Confidence</div>
+               <div style={{ fontSize: 10, color: 'var(--text-secondary)', letterSpacing: '0.05em', textTransform: 'uppercase' }}>Confidence</div>
                <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 4 }}>
-                  <div style={{ width: 48, height: 6, background: 'rgba(255,255,255,0.1)', borderRadius: 3, overflow: 'hidden' }}>
+                  <div style={{ width: 40, height: 6, background: 'rgba(255,255,255,0.1)', borderRadius: 3, overflow: 'hidden' }}>
                      <div style={{ 
                         height: '100%', 
                         width: `${currentData.confidence * 100}%`, 
                         background: currentData.confidence > 0.8 ? '#00e5aa' : (currentData.confidence > 0.5 ? '#ffd600' : '#ff1744')
                      }} />
                   </div>
-                  <span style={{ fontSize: 15, fontWeight: 700, fontFamily: 'var(--font-mono)', lineHeight: 1 }}>{(currentData.confidence * 100).toFixed(0)}%</span>
+                  <span style={{ fontSize: 13, fontWeight: 700, fontFamily: 'var(--font-mono)', lineHeight: 1 }}>{(currentData.confidence * 100).toFixed(0)}%</span>
                </div>
             </div>
          </div>
        )}
 
        {/* 3. Hotspots Pill */}
-       <div style={pillStyle}>
+       <div style={pillStyle} className="forecast-pill-secondary">
           <div>
-             <div style={{ fontSize: 10, color: 'var(--text-secondary)', letterSpacing: '0.05em', textTransform: 'uppercase' }}>Active Hotspots</div>
-             <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, marginTop: 2 }}>
-                 <span style={{ fontSize: 20, fontWeight: 800, color: '#ff1744', lineHeight: 1 }}>{metrics.hotspots}</span>
-                 <span style={{ fontSize: 11, color: 'var(--text-muted)' }}>detected</span>
+             <div style={{ fontSize: 10, color: 'var(--text-secondary)', letterSpacing: '0.05em', textTransform: 'uppercase' }}>Hotspots</div>
+             <div style={{ display: 'flex', alignItems: 'baseline', gap: 4, marginTop: 2 }}>
+                 <span style={{ fontSize: 16, fontWeight: 800, color: '#ff1744', lineHeight: 1 }}>{metrics.hotspots}</span>
+                 <span style={{ fontSize: 10, color: 'var(--text-muted)' }}>found</span>
              </div>
           </div>
        </div>
