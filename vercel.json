@@ -1,5 +1,10 @@
 {
   "version": 2,
+  "functions": {
+    "api/*.py": {
+      "excludeFiles": "{src,node_modules,dist,docs,tests}/**"
+    }
+  },
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/index.py" },
     { "source": "/(.*)", "destination": "/index.html" }

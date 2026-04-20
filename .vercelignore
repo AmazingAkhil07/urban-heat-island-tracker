@@ -1,11 +1,7 @@
-# Ignore frontend source and build artifacts for the backend bundle
-node_modules
-dist
-src
+# Only ignore things that are NEVER needed by either the build or the runtime
 .git
 .github
-*.log
-venv
 backend/venv
-.env
+venv
+*.log
 local_data
