@@ -1,0 +1,11 @@
+# Ignore frontend source and build artifacts for the backend bundle
+node_modules
+dist
+src
+.git
+.github
+*.log
+venv
+backend/venv
+.env
+local_data
